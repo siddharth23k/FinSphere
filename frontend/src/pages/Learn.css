@@ -1,0 +1,60 @@
+/* ── Progress Bar ── */
+.progress-bar-wrap { height: 3px; background: var(--bg-tertiary); border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px;
+  transition: width 1s var(--ease);
+}
+
+/* ── Tracks Grid ── */
+.tracks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+.track-card { cursor: pointer; text-align: center; padding: 32px 22px; transition: all 0.3s var(--ease); }
+.track-card:hover:not(.locked) {
+  transform: translateY(-5px);
+  border-color: rgba(212,175,55,0.18);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), var(--shadow-gold);
+}
+.track-card.locked { opacity: 0.35; cursor: not-allowed; filter: grayscale(0.5); }
+
+.track-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; transition: transform 0.3s var(--ease-back); }
+.track-card:hover:not(.locked) .track-icon { transform: scale(1.18) rotate(-3deg); }
+.track-card h3 { font-size: 14px; margin-bottom: 8px; letter-spacing: -0.01em; }
+
+/* ── Learn Layout ── */
+.learn-layout { display: grid; grid-template-columns: 256px 1fr; gap: 18px; align-items: start; }
+
+/* ── Module List ── */
+.module-list { padding: 16px; position: sticky; top: 24px; }
+.module-list h3 { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); margin-bottom: 10px; font-family: var(--font-body); font-weight: 600; }
+
+.module-item {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 9px 12px; border-radius: var(--r-sm);
+  cursor: pointer; font-size: 13px; color: var(--text-secondary);
+  transition: all var(--dur) var(--ease);
+  line-height: 1.45; margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+.module-item:hover { background: rgba(255,255,255,0.04); color: var(--text-primary); transform: translateX(2px); }
+.module-item.active { background: var(--gold-dim); color: var(--gold); border-color: rgba(212,175,55,0.18); font-weight: 500; }
+.module-item.done { color: var(--green); }
+
+/* ── Module Content ── */
+.module-content { min-height: 440px; }
+.module-content h2 { font-size: 1.4rem; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); letter-spacing: -0.025em; }
+.module-body { line-height: 1.85; margin-bottom: 28px; }
+
+.module-ai-help {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--r-md);
+  padding: 16px; margin-bottom: 24px;
+}
+.module-ai-help h4 { font-size: 13px; color: var(--gold); margin-bottom: 6px; }
+
+.module-nav {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-top: 20px; border-top: 1px solid var(--border);
+}

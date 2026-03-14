@@ -1,0 +1,65 @@
+/* ── Portfolio Header Card ── */
+.portfolio-header {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 24px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.portfolio-header > div {
+  padding: 24px 26px;
+  border-right: 1px solid var(--border);
+  transition: background var(--dur);
+}
+.portfolio-header > div:last-child { border-right: none; }
+.portfolio-header > div:hover { background: var(--bg-card-hover); }
+
+.portfolio-header .metric-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  margin-bottom: 12px;
+}
+.portfolio-header .metric-value {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+/* ── Search Wrapper ── */
+.search-wrapper { position: relative; margin-bottom: 16px; }
+
+/* ── Stock Detail ── */
+.stock-detail {
+  margin-top: 18px;
+  padding: 20px 22px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  animation: fadeInUp 0.3s var(--ease);
+}
+.stock-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.stock-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.stock-metrics > div {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-light);
+}
+.stock-metrics span { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 600; }
+.stock-metrics strong { font-family: var(--font-mono); font-size: 13px; color: var(--text-primary); font-weight: 500; }
