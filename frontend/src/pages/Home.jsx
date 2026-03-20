@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 
 const features = [
-  { icon: '📊', title: 'Paper Trading', desc: 'Trade with ₹1,00,000 virtual money. No real risk, real experience.' },
-  { icon: '📈', title: 'Live Analytics', desc: 'Real-time portfolio performance, sector exposure and P&L tracking.' },
-  { icon: '🤖', title: 'AI Insights', desc: 'Get personalized investment insights based on your portfolio.' },
-  { icon: '📰', title: 'Market News', desc: 'Stay updated with curated financial news and sentiment analysis.' },
-  { icon: '📚', title: 'Learn Finance', desc: 'Structured learning tracks from basics to advanced investing.' },
-  { icon: '🎯', title: 'Recommendations', desc: 'Discover investment ideas tailored to your risk profile.' },
+  { icon: '1.', title: 'Paper Trading', desc: 'Trade with ₹1,00,000 virtual money. No real risk, real experience.' },
+  { icon: '2.', title: 'Live Analytics', desc: 'Real-time portfolio performance, sector exposure and P&L tracking.' },
+  { icon: '3.', title: 'AI Insights', desc: 'Get personalized investment insights based on your portfolio.' },
+  { icon: '4.', title: 'Market News', desc: 'Stay updated with curated financial news and sentiment analysis.' },
+  { icon: '5.', title: 'Learn Finance', desc: 'Structured learning tracks from basics to advanced investing.' },
+  { icon: '6.', title: 'Recommendations', desc: 'Discover investment ideas tailored to your risk profile.' },
 ];
 
 const modalContent = {
