@@ -195,7 +195,6 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   animation: fadeInUp 0.65s var(--ease) 0.42s both;
-  /* glass top sheen */
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 24px 60px rgba(0,0,0,0.4);
 }
 
@@ -277,7 +276,6 @@
   transition: all 0.35s var(--ease);
 }
 
-/* Glass sheen top */
 .feature-card::before {
   content: '';
   position: absolute;
@@ -287,7 +285,6 @@
   transition: background 0.3s;
 }
 
-/* Hover glow from bottom */
 .feature-card::after {
   content: '';
   position: absolute;
@@ -345,7 +342,6 @@
   overflow: hidden;
 }
 
-/* Background glow */
 .testimonials-section::before {
   content: '';
   position: absolute;
@@ -492,6 +488,259 @@
 }
 .footer-links button:hover { color: var(--gold); }
 
+
+/* ══════════════════════════════════════════════════════════════
+   MORPH SECTION — Revolut-style scroll reveal
+══════════════════════════════════════════════════════════════ */
+.morph-section {
+  position: relative;
+  padding: 120px 80px 140px;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Ambient background glow */
+.morph-bg-glow {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 40%, rgba(99,102,241,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 70% 60%, rgba(212,175,55,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Eyebrow label ── */
+.morph-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.morph-eyebrow--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.morph-eyebrow span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  padding: 5px 14px;
+  background: rgba(212,175,55,0.08);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 999px;
+}
+
+/* ── Section heading ── */
+.morph-heading {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin-bottom: 64px;
+  background: linear-gradient(130deg, #f0f2f8 0%, #8090b0 60%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+}
+.morph-heading--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Stage wrapper ── */
+.morph-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* ── Hero image (the "big picture") ── */
+.morph-hero-img {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(212,175,55,0.12);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+  /* Start: invisible, scaled up */
+  opacity: 0;
+  transform: scale(1.06) translateY(30px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+    transform 0.8s cubic-bezier(0.22,1,0.36,1),
+    max-width 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s,
+    border-radius 0.9s ease 0.5s,
+    box-shadow 0.9s ease 0.5s,
+    margin-bottom 0.6s ease 0.5s;
+}
+
+/* Phase: entering — fly in */
+.morph-hero-img--entering {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Phase: morphed — shrink to card size, slide up */
+.morph-hero-img--morphed {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  max-width: 100%;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+}
+
+.morph-img-inner {
+  position: relative;
+  width: 100%;
+}
+
+.money-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Subtle overlay sheen */
+.morph-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.03) 0%,
+    transparent 50%,
+    rgba(0,0,0,0.15) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Three morph cards ── */
+.morph-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.morph-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: default;
+  position: relative;
+  /* Start hidden, shifted down */
+  opacity: 0;
+  transform: translateY(28px) scale(0.97);
+  transition:
+    opacity 0.6s cubic-bezier(0.22,1,0.36,1) var(--card-delay, 0ms),
+    transform 0.6s cubic-bezier(0.22,1,0.36,1) var(--card-delay, 0ms),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Visible state */
+.morph-card--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Top accent line */
+.morph-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--card-accent, #D4AF37), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.morph-card--active::before { opacity: 1; }
+
+.morph-card--active {
+  border-color: color-mix(in srgb, var(--card-accent, #D4AF37) 30%, transparent);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4),
+              0 0 0 1px color-mix(in srgb, var(--card-accent, #D4AF37) 15%, transparent);
+  transform: translateY(-5px) scale(1) !important;
+}
+
+/* ── Card visual area (top portion) ── */
+.morph-card-visual {
+  position: relative;
+  padding: 28px 28px 20px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.morph-card-icon {
+  width: 48px;
+  height: 48px;
+}
+.morph-card-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.morph-card-deco {
+  width: 100%;
+  height: 40px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+.morph-card--active .morph-card-deco { opacity: 1; }
+.morph-card-deco svg { width: 100%; height: 100%; }
+
+/* ── Card text body ── */
+.morph-card-body {
+  padding: 22px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.morph-card-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--card-accent, var(--gold));
+}
+
+.morph-card-heading {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.morph-card-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  font-weight: 300;
+  margin: 0;
+}
+
 /* ══════════════════════════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════════════════════════ */
@@ -506,4 +755,9 @@
   .testimonials-grid { grid-template-columns: 1fr; }
   .features-section, .testimonials-section { padding: 60px 24px; }
   .home-footer { flex-direction: column; gap: 14px; padding: 20px 24px; }
+
+  /* Morph section mobile */
+  .morph-section { padding: 80px 24px 100px; }
+  .morph-cards { grid-template-columns: 1fr; }
+  .morph-hero-img--morphed { max-width: 100%; }
 }
