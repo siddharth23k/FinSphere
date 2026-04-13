@@ -10,27 +10,9 @@ const tradeRoutes = require('./routes/trades');
 
 const app = express();
 
-// CORS - Allow all origins for development
+// CORS - Temporary fix to allow all origins
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    // Allow specific origins
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'https://finsphere-eight.vercel.app',
-      'https://finsphere-rqh2.onrender.com',
-      'https://vercel.app',
-      'https://*.vercel.app'
-    ];
-    
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*', // Temporary fix for deployment
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
