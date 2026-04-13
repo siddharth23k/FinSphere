@@ -58,11 +58,67 @@
 
 .metric-sub { font-size: 12px; font-weight: 600; margin-top: 7px; }
 
+/* ── Chart Styles */
+.chart-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.legend-dot.portfolio {
+  background: var(--gold);
+}
+
+.legend-dot.index {
+  background: var(--text-secondary);
+}
+
+.chart-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 10px;
+  background: var(--bg-secondary);
+  border-radius: var(--r-md);
+}
+
+.portfolio-chart {
+  width: 100%;
+  height: auto;
+  min-width: 600px;
+}
+
+.portfolio-chart line {
+  transition: stroke 0.2s ease;
+}
+
+.portfolio-chart circle {
+  transition: r 0.2s ease;
+}
+
+.portfolio-chart circle:hover {
+  r: 6;
+}
+
 /* ── Dashboard Grid ── */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 16px;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
 }
 
 /* ── Alerts ── */

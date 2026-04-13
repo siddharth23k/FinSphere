@@ -78,3 +78,30 @@
 .sim-result > div:last-child { border-right: none; }
 .sim-result span { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 600; }
 .sim-result strong { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--gold); }
+
+/* ── Simulation Chart ── */
+.sim-chart-container {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.sim-chart {
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+}
+
+.sim-chart line {
+  transition: stroke 0.2s ease;
+}
+
+.sim-chart .chart-point {
+  transition: r 0.2s ease;
+}
+
+.sim-chart .chart-point:hover {
+  r: 5;
+}

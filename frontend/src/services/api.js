@@ -25,6 +25,7 @@ export const getStockQuote = (symbol) => API.get(`/stocks/quote/${symbol}`);
 export const searchStocks = (query) => API.get(`/stocks/search/${query}`);
 export const getStockHistory = (symbol) => API.get(`/stocks/history/${symbol}`);
 export const getNews = () => API.get('/stocks/news');
+export const getIndexData = (symbol = '^GSPC') => API.get(`/stocks/history/${symbol}`); // S&P 500
 
 // Trades
 export const getTrades = () => API.get('/trades');

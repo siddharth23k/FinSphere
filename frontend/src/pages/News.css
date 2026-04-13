@@ -27,15 +27,27 @@
 /* ── Featured ── */
 .news-featured {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 0;
   padding: 0;
   overflow: hidden;
   text-decoration: none;
-  min-height: 280px;
+  min-height: 320px;
   transition: all 0.35s var(--ease);
+  border-radius: var(--r-xl);
+  position: relative;
 }
-.news-featured:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(0,0,0,0.5), var(--shadow-gold); }
+.news-featured:hover { transform: translateY(-6px); box-shadow: 0 32px 80px rgba(0,0,0,0.6), var(--shadow-gold); }
+.news-featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.news-featured:hover::before { opacity: 1; }
 
 .featured-img {
   width: 100%; height: 100%;
@@ -59,11 +71,28 @@
 
 /* ── Card ── */
 .news-card {
-  display: flex; flex-direction: column; gap: 7px;
-  text-decoration: none; padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 8px;
+  text-decoration: none; padding: 20px;
   transition: all var(--dur) var(--ease);
+  border-radius: var(--r-lg);
+  position: relative;
+  overflow: hidden;
 }
-.news-card:hover { transform: translateY(-4px); border-color: var(--border-accent); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+.news-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.news-card:hover { 
+  transform: translateY(-6px) scale(1.02); 
+  border-color: var(--border-accent); 
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), var(--shadow-gold); 
+}
+.news-card:hover::before { opacity: 1; }
 
 .news-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
 .news-source { font-size: 9.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.09em; }

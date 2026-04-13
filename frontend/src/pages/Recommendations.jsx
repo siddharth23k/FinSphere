@@ -4,6 +4,144 @@ import { getPortfolio, getStockQuote, searchStocks } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import './Recommendations.css';
 
+// Simulation Graph Component
+const SimulationGraph = ({ amount, years, returnRate }) => {
+  // Generate projection data
+  const generateProjection = () => {
+    const data = [];
+    let currentValue = amount;
+    
+    for (let year = 0; year <= years; year++) {
+      data.push({
+        year,
+        value: Math.round(currentValue),
+        principal: Math.round(amount)
+      });
+      currentValue *= (1 + returnRate / 100);
+    }
+    
+    return data;
+  };
+
+  const projectionData = generateProjection();
+  
+  // SVG dimensions
+  const width = 100;
+  const height = 200;
+  const padding = 15;
+  const chartWidth = width - 2 * padding;
+  const chartHeight = height - 2 * padding;
+  
+  const maxValue = Math.max(...projectionData.map(d => d.value));
+  const minValue = amount;
+  const valueRange = maxValue - minValue;
+  
+  // Scale functions
+  const xScale = (year) => padding + (year / years) * chartWidth;
+  const yScale = (value) => height - padding - ((value - minValue) / valueRange) * chartHeight;
+  
+  // Create paths
+  const principalPath = projectionData.map((d, i) => {
+    const x = xScale(d.year);
+    const y = yScale(d.principal);
+    return i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
+  }).join(' ');
+  
+  const valuePath = projectionData.map((d, i) => {
+    const x = xScale(d.year);
+    const y = yScale(d.value);
+    return i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
+  }).join(' ');
+  
+  return (
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="sim-chart">
+      {/* Grid lines */}
+      {[0, 25, 50, 75, 100].map(i => {
+        const y = padding + (i * chartHeight / 100);
+        return (
+          <g key={i}>
+            <line 
+              x1={padding} 
+              y1={y} 
+              x2={width - padding} 
+              y2={y} 
+              stroke="rgba(255,255,255,0.1)" 
+              strokeWidth="0.5" 
+            />
+            <text 
+              x={padding - 5} 
+              y={y + 4} 
+              fill="var(--text-muted)" 
+              fontSize="8" 
+              textAnchor="end"
+            >
+              {Math.round(minValue + (valueRange * (1 - i/4))).toLocaleString()}
+            </text>
+          </g>
+        );
+      })}
+      
+      {/* Principal line */}
+      <path 
+        d={principalPath} 
+        fill="none" 
+        stroke="var(--text-muted)" 
+        strokeWidth="2" 
+        strokeDasharray="4,4" 
+      />
+      
+      {/* Value line */}
+      <path 
+        d={valuePath} 
+        fill="none" 
+        stroke="var(--gold)" 
+        strokeWidth="3" 
+      />
+      
+      {/* Area fill */}
+      <path 
+        d={`${valuePath} L ${xScale(years)} ${yScale(amount)} L ${padding} ${yScale(amount)} Z`}
+        fill="url(#goldGradient)" 
+        opacity="0.3" 
+      />
+      
+      {/* Gradient definition */}
+      <defs>
+        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="var(--gold)" stopOpacity="0.05" />
+        </linearGradient>
+      </defs>
+      
+      {/* Data points */}
+      {projectionData.map((d, i) => (
+        <circle 
+          key={d.year} 
+          cx={xScale(d.year)} 
+          cy={yScale(d.value)} 
+          r="3" 
+          fill="var(--gold)" 
+          className="chart-point"
+        />
+      ))}
+      
+      {/* X-axis labels */}
+      {projectionData.filter((_, i) => i % Math.ceil(Math.max(1, years / 5)) === 0).map(d => (
+        <text 
+          key={d.year} 
+          x={xScale(d.year)} 
+          y={height - 8} 
+          fill="var(--text-muted)" 
+          fontSize="8" 
+          textAnchor="middle"
+        >
+          Y{d.year}
+        </text>
+      ))}
+    </svg>
+  );
+};
+
 const RECOMMENDATION_CARDS = [
   {
     label: 'SIP Plan',
@@ -12,10 +150,10 @@ const RECOMMENDATION_CARDS = [
     tip: 'Start a monthly SIP in index funds like Nifty 50 for steady long-term growth.',
     details: [
       '📌 SIP (Systematic Investment Plan) lets you invest a fixed amount every month automatically.',
-      '📈 Even ₹500/month in a Nifty 50 index fund can grow significantly over 10–15 years due to compounding.',
+      '📈 Even $500/month in a S&P 500 index fund can grow significantly over 10–15 years due to compounding.',
       '✅ Best for: Beginners, salaried individuals, anyone who wants passive wealth building.',
       '⚠️ Tip: Stay consistent — avoid stopping SIPs during market dips. That is when you buy cheaper units.',
-      '🏦 Popular options: UTI Nifty 50 Index Fund, HDFC Index Fund – Nifty 50 Plan.',
+      '🏦 Popular options: Vanguard S&P 500 ETF, Fidelity 500 Index Fund.',
     ],
   },
   {
@@ -61,16 +199,16 @@ const RECOMMENDATION_CARDS = [
   },
   {
     label: 'Tax Saving',
-    sub: 'ELSS',
+    sub: '401(k)',
     icon: '💸',
-    tip: 'Invest in ELSS mutual funds to save tax under Section 80C (up to ₹1.5L).',
+    tip: 'Invest in index funds to save tax under Section 401(k) (up to $19,500).',
     details: [
-      '📌 ELSS (Equity Linked Savings Scheme) is a type of mutual fund that qualifies for tax deduction under Section 80C.',
-      '💰 You can save up to ₹46,800 in taxes per year by investing ₹1.5 lakh in ELSS.',
-      '⏳ Lock-in period: 3 years (shortest among all 80C instruments).',
-      '✅ Best for: Salaried individuals in the 20–30% tax bracket who also want equity growth.',
-      '⚠️ Returns are market-linked and not guaranteed — but historically ELSS has given 12–15% CAGR over long periods.',
-      '🏦 Popular options: Mirae Asset Tax Saver Fund, Axis Long Term Equity Fund.',
+      '📌 401(k) is a retirement savings plan that qualifies for tax deduction under Section 401(k).',
+      '💰 You can save up to $4,680 in taxes per year by investing $19,500 in 401(k).',
+      '⏳ Lock-in period: 3 years (shortest among all retirement plans).',
+      '✅ Best for: Salaried individuals in 20–30% tax bracket who also want equity growth.',
+      '⚠️ Returns are market-linked and not guaranteed — but historically 401(k) has given 10–12% CAGR over long periods.',
+      '🏦 Popular options: Vanguard Target Retirement Fund, Fidelity 401(k) Index Fund.',
     ],
   },
 ];
@@ -165,7 +303,7 @@ const Recommendations = () => {
                     {selectedStock.quote && (
                       <div style={{ textAlign: 'right' }}>
                         <div style={{ fontFamily: 'var(--font-display)', fontSize: '24px', fontWeight: '700' }}>
-                          ₹{selectedStock.quote.price?.toFixed(2)}
+                          ${selectedStock.quote.price?.toFixed(2)}
                         </div>
                         <div className={selectedStock.quote.change >= 0 ? 'positive' : 'negative'}>
                           {selectedStock.quote.change >= 0 ? '+' : ''}{selectedStock.quote.change?.toFixed(2)} ({selectedStock.quote.changePercent})
@@ -175,9 +313,9 @@ const Recommendations = () => {
                   </div>
                   {selectedStock.quote && (
                     <div className="stock-metrics">
-                      <div><span>High</span><strong>₹{selectedStock.quote.high?.toFixed(2)}</strong></div>
-                      <div><span>Low</span><strong>₹{selectedStock.quote.low?.toFixed(2)}</strong></div>
-                      <div><span>Prev Close</span><strong>₹{selectedStock.quote.previousClose?.toFixed(2)}</strong></div>
+                      <div><span>High</span><strong>${selectedStock.quote.high?.toFixed(2)}</strong></div>
+                      <div><span>Low</span><strong>${selectedStock.quote.low?.toFixed(2)}</strong></div>
+                      <div><span>Prev Close</span><strong>${selectedStock.quote.previousClose?.toFixed(2)}</strong></div>
                       <div><span>Volume</span><strong>{Number(selectedStock.quote.volume).toLocaleString('en-IN')}</strong></div>
                     </div>
                   )}
@@ -193,7 +331,7 @@ const Recommendations = () => {
                 <div className="analytics-item">
                   <span>P&L</span>
                   <strong className={pnl >= 0 ? 'positive' : 'negative'}>
-                    {pnl >= 0 ? '+' : ''}₹{Math.abs(pnl).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                    {pnl >= 0 ? '+' : ''}${Math.abs(pnl).toLocaleString('en-US', { maximumFractionDigits: 0 })}
                   </strong>
                 </div>
                 <div className="analytics-item">
@@ -206,10 +344,10 @@ const Recommendations = () => {
                 </div>
               </div>
               <div style={{ marginTop: '16px', padding: '14px', background: 'var(--bg-secondary)', borderRadius: 'var(--radius)', fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                🤖 <strong style={{ color: 'var(--accent-gold)' }}>AI Summary: </strong>
+                <strong style={{ color: 'var(--accent-gold)' }}>Portfolio Summary: </strong>
                 {portfolio?.holdings?.length > 0
-                  ? `Your portfolio has ${portfolio.holdings.length} holdings with ${pnl >= 0 ? 'a gain' : 'a loss'} of ₹${Math.abs(pnl).toFixed(0)}. ${topAlloc > 40 ? `⚠ ${topHolding?.symbol} takes up ${topAlloc}% — consider diversifying.` : 'Diversification looks reasonable.'}`
-                  : 'Start adding holdings to get personalized AI insights on your portfolio.'}
+                  ? `Your portfolio has ${portfolio.holdings.length} holdings with ${pnl >= 0 ? 'a gain' : 'a loss'} of $${Math.abs(pnl).toFixed(0)}. ${topAlloc > 40 ? `⚠ ${topHolding?.symbol} takes up ${topAlloc}% — consider diversifying.` : 'Diversification looks reasonable.'}`
+                  : 'Start adding holdings to get personalized insights on your portfolio.'}
               </div>
             </div>
           </div>
@@ -221,7 +359,7 @@ const Recommendations = () => {
               <div className="profile-snapshot">
                 <div><span>Risk</span><strong>{user?.riskAppetite || 'Medium'}</strong></div>
                 <div><span>Level</span><strong>{user?.experienceLevel || 'Beginner'}</strong></div>
-                <div><span>Balance</span><strong>₹{Number(user?.virtualBalance || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong></div>
+                <div><span>Balance</span><strong>${Number(user?.virtualBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong></div>
               </div>
               <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
                 Goal: Wealth Growth · Time Horizon: Long Term
@@ -303,7 +441,7 @@ const Recommendations = () => {
             <div className="card">
               <h3 style={{ marginBottom: '16px' }}>📐 What-If Simulation</h3>
               <div className="sim-row">
-                <label>Investment (₹)</label>
+                <label>Investment ($)</label>
                 <input className="input" type="number" value={simAmount} onChange={(e) => setSimAmount(Number(e.target.value))} />
               </div>
               <div className="sim-row">
@@ -314,16 +452,24 @@ const Recommendations = () => {
                 <label>Annual Return: <strong>{simReturn}%</strong></label>
                 <input type="range" min="1" max="30" value={simReturn} onChange={(e) => setSimReturn(Number(e.target.value))} className="range-input" />
               </div>
+
               <div className="sim-result">
                 <div>
                   <span>Future Value</span>
-                  <strong>₹{simFV.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong>
+                  <strong>${simFV.toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong>
                 </div>
                 <div>
                   <span>Total Gain</span>
-                  <strong className="positive">+₹{simGain.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong>
+                  <strong className="positive">+${simGain.toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong>
                 </div>
               </div>
+
+              {/* Simulation Graph */}
+              <div className="sim-chart-container">
+                <h4 style={{ marginBottom: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>Growth Projection</h4>
+                <SimulationGraph amount={simAmount} years={simYears} returnRate={simReturn} />
+              </div>
+
               <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '12px' }}>
                 Educational / Paper Recommendations only. Not real financial advice.
               </p>

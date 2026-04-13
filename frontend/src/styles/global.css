@@ -127,7 +127,14 @@ h1, h2, h3, h4, h5 {
   font-weight: 700;
   line-height: 1.15;
   color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
+
+h1 { font-size: 2.5rem; font-weight: 800; }
+h2 { font-size: 2rem; font-weight: 700; }
+h3 { font-size: 1.5rem; font-weight: 600; }
+h4 { font-size: 1.25rem; font-weight: 600; }
+h5 { font-size: 1.125rem; font-weight: 600; }
 
 /* ══════════════════════════════════════════════════════════════
    PAGE HEADER
@@ -155,15 +162,18 @@ h1, h2, h3, h4, h5 {
    CARD
 ══════════════════════════════════════════════════════════════ */
 .card {
-  background: var(--bg-card);
+  background: linear-gradient(145deg, var(--bg-card) 0%, rgba(13,20,36,0.8) 100%);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  padding: 26px;
+  padding: 28px;
   position: relative;
   overflow: hidden;
-  transition: border-color var(--dur) var(--ease),
-              box-shadow var(--dur) var(--ease),
-              transform var(--dur) var(--ease);
+  transition: all var(--dur) var(--ease);
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 4px 20px rgba(0,0,0,0.3),
+    0 0 0 1px rgba(255,255,255,0.02),
+    inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
 /* Gradient sheen top */
@@ -180,9 +190,13 @@ h1, h2, h3, h4, h5 {
 }
 
 .card:hover {
-  border-color: rgba(212,175,55,0.15);
-  box-shadow: var(--shadow-gold);
-  transform: translateY(-1px);
+  border-color: rgba(212,175,55,0.25);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(212,175,55,0.1),
+    0 0 40px rgba(212,175,55,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .card-header {
@@ -249,25 +263,55 @@ h1, h2, h3, h4, h5 {
   background: linear-gradient(135deg, #d4af37 0%, #c09a28 50%, #a8841e 100%);
   color: #07090f;
   font-weight: 700;
-  box-shadow: 0 4px 20px rgba(212,175,55,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+  box-shadow: 
+    0 4px 20px rgba(212,175,55,0.3),
+    0 0 0 1px rgba(255,255,255,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
 }
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s;
+}
+.btn-primary:hover::before { left: 100%; }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(212,175,55,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+  box-shadow: 
+    0 12px 40px rgba(212,175,55,0.45),
+    0 0 0 1px rgba(255,255,255,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.3);
 }
-.btn-primary:active { transform: translateY(0); box-shadow: 0 2px 10px rgba(212,175,55,0.2); }
+.btn-primary:active { 
+  transform: translateY(0); 
+  box-shadow: 
+    0 4px 16px rgba(212,175,55,0.25),
+    0 0 0 1px rgba(255,255,255,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.1); 
+}
 
 .btn-secondary {
-  background: transparent;
+  background: rgba(255,255,255,0.02);
   color: var(--text-secondary);
   border: 1px solid var(--border-glass);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 2px 12px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.05);
 }
 .btn-secondary:hover {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.06);
   border-color: var(--border-accent);
   color: var(--text-primary);
   transform: translateY(-1px);
+  box-shadow: 
+    0 4px 20px rgba(0,0,0,0.3),
+    0 0 0 1px rgba(212,175,55,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .btn-success {
@@ -502,12 +546,15 @@ h1, h2, h3, h4, h5 {
   background: var(--bg-secondary);
   border: 1px solid var(--border-accent);
   border-radius: var(--r-md);
-  list-style: none; z-index: 100;
+  list-style: none; z-index: 9999;
   max-height: 240px; overflow-y: auto;
   box-shadow: var(--shadow-md);
   animation: dropIn 0.15s var(--ease);
   backdrop-filter: blur(10px);
 }
+
+/* Ensure search wrapper allows dropdown to escape */
+.search-wrapper { position: relative; z-index: 1; }
 @keyframes dropIn {
   from { opacity:0; transform: translateY(-8px); }
   to   { opacity:1; transform: translateY(0); }

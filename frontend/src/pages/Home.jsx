@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 
 const features = [
-  { icon: '1.', title: 'Paper Trading', desc: 'Trade with ₹1,00,000 virtual money. No real risk, real experience.' },
+  { icon: '1.', title: 'Paper Trading', desc: 'Trade with $100,000 virtual money. No real risk, real experience.' },
   { icon: '2.', title: 'Live Analytics', desc: 'Real-time portfolio performance, sector exposure and P&L tracking.' },
   { icon: '3.', title: 'AI Insights', desc: 'Get personalized investment insights based on your portfolio.' },
   { icon: '4.', title: 'Market News', desc: 'Stay updated with curated financial news and sentiment analysis.' },
@@ -221,7 +221,7 @@ function MoneySVG() {
       <rect x="40" y="56" width="120" height="6" rx="3" fill="rgba(255,255,255,0.05)"/>
 
       {/* Big number */}
-      <text x="40" y="110" fontFamily="'SF Pro Display', sans-serif" fontSize="36" fontWeight="700" fill="#D4AF37">₹1,24,830</text>
+      <text x="40" y="110" fontFamily="'SF Pro Display', sans-serif" fontSize="36" fontWeight="700" fill="#D4AF37">$124,830</text>
       <text x="40" y="132" fontFamily="sans-serif" fontSize="12" fill="rgba(255,255,255,0.4)">Portfolio value</text>
 
       {/* Up badge */}
@@ -298,16 +298,16 @@ const Home = () => {
       <section className="hero">
         <div className="hero-glow" />
         <div className="hero-content">
-          <div className="hero-badge">🚀 Paper Trading Platform</div>
+          <div className="hero-badge">Advanced Paper Trading Platform</div>
           <h1>Smarter Portfolio Intelligence<br />for Better Decisions</h1>
-          <p>Track, analyze, and understand your investments using data-driven insights. Start with ₹1,00,000 virtual money — zero risk, real learning.</p>
+          <p>Track, analyze, and understand your investments using data-driven insights. Start with $100,000 virtual money — zero risk, real learning.</p>
           <div className="hero-cta">
             <Link to="/auth?mode=register" className="btn btn-primary">Get Started Free</Link>
             <Link to="/auth" className="btn btn-secondary">Sign In</Link>
           </div>
         </div>
         <div className="hero-stats">
-          <div className="stat"><span>₹0</span><p>Real Risk</p></div>
+          <div className="stat"><span>$0</span><p>Real Risk</p></div>
           <div className="stat"><span>∞</span><p>Learning</p></div>
           <div className="stat"><span>Live</span><p>Market Data</p></div>
         </div>

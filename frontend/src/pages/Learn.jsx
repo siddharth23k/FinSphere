@@ -12,6 +12,7 @@ const tracks = [
       { title: 'What is the Stock Market?', content: 'The stock market is a marketplace where buyers and sellers trade shares of publicly listed companies. When you buy a stock, you own a small piece of that company. Stock prices fluctuate based on supply, demand, company performance, and economic factors.\n\n**Key Terms:**\n• **Bull Market** – Prices are rising (optimistic market)\n• **Bear Market** – Prices are falling (pessimistic market)\n• **Index** – A benchmark like Nifty 50 that tracks top companies\n• **Dividend** – A portion of company profits paid to shareholders' },
       { title: 'Understanding Risk vs Return', content: 'Every investment carries risk. Higher potential returns usually come with higher risk. As an investor, you must find your comfort level.\n\n**Types of Risk:**\n• **Market Risk** – The whole market falls\n• **Company Risk** – A specific company performs badly\n• **Liquidity Risk** – You can\'t sell your investment easily\n\n**Risk vs Return principle:** Government bonds are low-risk/low-return. Small-cap stocks are high-risk/high-return. Diversification helps manage risk.' },
       { title: 'How to Read a Stock Chart', content: 'Stock charts show historical price movements over time. Learning to read them is essential.\n\n**Key Chart Elements:**\n• **Candlestick** – Shows open, high, low, close price for a period\n• **Green candle** – Price closed higher than it opened\n• **Red candle** – Price closed lower than it opened\n• **Volume** – Number of shares traded (higher = more conviction)\n• **Moving Average** – Smoothed price trend line (e.g., 50-day MA)' },
+      { title: 'Portfolio Management', content: 'Building and managing a diversified portfolio is key to long-term success.\n\n**Core Principles:**\n• **Diversification** – Spread investments across different sectors and asset classes\n• **Asset Allocation** – Balance between stocks, bonds, and cash based on your risk tolerance\n• **Rebalancing** – Periodically adjust your portfolio back to target allocations\n• **Risk Management** – Never invest more than you can afford to lose\n• **Long-term Perspective** – Focus on decades, not days or weeks' },
     ],
   },
   {
@@ -33,6 +34,8 @@ const tracks = [
     modules: [
       { title: '50/30/20 Rule', content: 'The 50/30/20 rule is a simple budgeting framework.\n\n**How it works:**\n• **50%** of income → Needs (rent, food, bills)\n• **30%** of income → Wants (entertainment, dining out)\n• **20%** of income → Savings & investments\n\nExample: If you earn ₹50,000/month:\n• ₹25,000 → Essentials\n• ₹15,000 → Lifestyle\n• ₹10,000 → Invest/Save\n\nThis is a starting point — adjust based on your goals.' },
       { title: 'Emergency Fund', content: 'An emergency fund is 3–6 months of living expenses kept in liquid savings.\n\n**Why it matters:**\n• Job loss or medical emergency won\'t force you to sell investments\n• Prevents taking on high-interest debt\n• Gives psychological safety to take investment risks\n\n**Where to keep it:** High-yield savings account or liquid mutual fund — accessible within 1–2 days, not locked away.' },
+      { title: 'Debt Management', content: 'Understanding and managing debt is crucial for financial health.\n\n**Good Debt vs Bad Debt:**\n• **Good Debt** – Low-interest, tax-deductible (mortgage, student loans)\n• **Bad Debt** – High-interest, non-deductible (credit cards, personal loans)\n\n**Debt Payoff Strategies:**\n• **Avalanche Method** – Pay highest interest debt first\n• **Snowball Method** – Pay smallest balance first\n• **Debt Consolidation** – Combine multiple debts into one lower-rate loan' },
+      { title: 'Retirement Planning', content: 'Start planning for retirement early, even if it seems far away.\n\n**Key Concepts:**\n• **Compound Interest** – Your money earning money on money\n• **401(k) Match** – Free money from your employer\n• **Rule of 72** – Divide savings rate by 72 to estimate years to double\n• **Sequence of Returns** – Withdraw from taxable accounts first\n\n**Retirement Accounts:**\n• **401(k)** – Employer-sponsored with tax benefits\n• **IRA** – Individual Retirement Account\n• **Roth IRA** – Tax-free growth and withdrawals' },
     ],
   },
   {
@@ -45,8 +48,54 @@ const tracks = [
       { title: 'Technical Analysis Basics', content: 'Technical analysis uses price and volume patterns to predict future movements.\n\n**Common Indicators:**\n• **RSI (Relative Strength Index)** – Above 70 = overbought, Below 30 = oversold\n• **MACD** – Trend momentum indicator\n• **Bollinger Bands** – Price volatility bands\n• **Support & Resistance** – Price levels where stocks tend to reverse\n\nNote: Technical analysis works better for short-term trading. Fundamental analysis is better for long-term investing.' },
     ],
   },
-  { id: 'mutualfunds', title: 'Mutual Funds', icon: '🏛️', status: 'locked', modules: [] },
-  { id: 'taxsip', title: 'Tax & SIP', icon: '📋', status: 'locked', modules: [] },
+  { 
+    id: 'mutualfunds', 
+    title: 'Mutual Funds', 
+    icon: '🏛️', 
+    status: 'available',
+    modules: [
+      { 
+        title: 'Introduction to Mutual Funds', 
+        content: 'Mutual funds pool money from many investors to invest in stocks, bonds, and other securities.\n\n**How They Work:**\n• Professional fund managers handle investments\n• Diversification across multiple securities\n• Daily pricing based on net asset value (NAV)\n• Liquidity - easy to buy and sell\n\n**Types of Mutual Funds:**\n• **Equity Funds** - Invest in stocks\n• **Debt Funds** - Invest in bonds and fixed income\n• **Hybrid Funds** - Mix of equity and debt\n• **Index Funds** - Track market indices like S&P 500' 
+      },
+      { 
+        title: 'Index Funds vs Active Funds', 
+        content: 'Choose between passive index funds and actively managed funds.\n\n**Index Funds (Passive):**\n• Track market indices automatically\n• Lower expense ratios (0.1-0.5%)\n• Consistent with market performance\n• No fund manager decisions needed\n\n**Active Funds:**\n• Fund manager actively selects stocks\n• Higher expense ratios (1-2%+)\n• Potential to beat the market\n• Risk of underperformance\n\n**Evidence:** Most active funds underperform their benchmark indices over the long term.' 
+      },
+      { 
+        title: 'Expense Ratios and Costs', 
+        content: 'Understanding mutual fund costs is crucial for returns.\n\n**Types of Costs:**\n• **Expense Ratio** - Annual management fee\n• **Load Fees** - Sales charges (front-end or back-end)\n• **Transaction Costs** - Trading expenses\n• **Tax Costs** - Capital gains distributions\n\n**Impact of Costs:**\n• 1% higher expense ratio = ~20% lower returns over 30 years\n• Look for funds with expense ratios under 0.5%\n• Consider tax-efficient funds for taxable accounts\n• No-load funds avoid sales charges' 
+      },
+      { 
+        title: 'Building a Mutual Fund Portfolio', 
+        content: 'Create a diversified mutual fund portfolio based on your goals.\n\n**Portfolio Construction:**\n• **Core Holdings** - Broad market index funds (60-70%)\n• **Satellite Holdings** - Sector or theme funds (20-30%)\n• **International Exposure** - Global funds (10-20%)\n• **Bond Allocation** - Based on age and risk tolerance\n\n**Rebalancing Strategy:**\n• Review portfolio quarterly\n• Rebalance when allocations drift by 5%+\n• Use new contributions to rebalance\n• Consider tax implications when selling' 
+      },
+    ], 
+  },
+  { 
+    id: 'taxsip', 
+    title: 'Tax & SIP', 
+    icon: '📋', 
+    status: 'available',
+    modules: [
+      { 
+        title: 'Advanced SIP Strategies', 
+        content: 'Systematic Investment Plans can be optimized for better returns.\n\n**SIP Types:**\n• **Regular SIP** - Fixed amount monthly\n• **Step-up SIP** - Increase amount annually\n• **Flexible SIP** - Variable amounts based on market\n• **Trigger SIP** - Invest when market conditions are met\n\n**Optimization Strategies:**\n• Increase SIP amount by 10% yearly (step-up)\n• Invest more during market corrections\n• Use multiple SIPs for different goals\n• Consider direct plans for lower costs' 
+      },
+      { 
+        title: 'Tax-Efficient Investing', 
+        content: 'Minimize taxes to maximize your investment returns.\n\n**Tax-Advantaged Accounts:**\n• **401(k)** - Pre-tax contributions, tax-deferred growth\n• **Roth IRA** - Post-tax contributions, tax-free growth\n• **Traditional IRA** - Tax-deductible contributions\n• **HSAs** - Triple tax advantage for medical expenses\n\n**Tax Loss Harvesting:**\n• Sell losing investments to offset gains\n• Wait 30 days to avoid wash sale rule\n• Reinvest in similar but not identical securities\n• Can offset up to $3,000 in ordinary income' 
+      },
+      { 
+        title: 'Capital Gains Tax Planning', 
+        content: 'Understanding capital gains taxes is essential for investors.\n\n**Short-term vs Long-term:**\n• **Short-term** - Held < 1 year, taxed as ordinary income\n• **Long-term** - Held > 1 year, preferential rates (0%, 15%, 20%)\n\n**Tax Rates (2024):**\n• 0% for income up to $44,625 (single)\n• 15% for income $44,626-$492,300\n• 20% for income above $492,300\n• Additional 3.8% Net Investment Income Tax\n\n**Strategies:**\n• Hold investments > 1 year when possible\n• Consider tax-loss harvesting\n• Donate appreciated securities to charity\n• Use tax-efficient index funds' 
+      },
+      { 
+        title: 'Retirement Tax Planning', 
+        content: 'Optimize your retirement withdrawals for tax efficiency.\n\n**Withdrawal Strategies:**\n• **Traditional 401(k)/IRA)** - Taxed as ordinary income\n• **Roth Accounts** - Tax-free withdrawals\n• **Taxable Accounts** - Capital gains rates\n• **HSAs** - Tax-free for medical expenses\n\n**Required Minimum Distributions (RMDs):**\n• Start at age 73 (as of 2023)\n• Calculated based on account balance and life expectancy\n• 50% penalty for missed RMDs\n• Consider Roth conversions before RMDs begin\n\n**Social Security Taxation:**\n• 0-85% taxable based on other income\n• Plan withdrawals to minimize taxation\n• Consider state tax implications' 
+      },
+    ], 
+  },
 ];
 
 const Learn = () => {
@@ -101,9 +150,9 @@ const Learn = () => {
                   <div className="track-icon">{track.icon}</div>
                   <h3>{track.title}</h3>
                   {track.status === 'locked' ? (
-                    <span className="tag tag-gold">🔒 Locked</span>
+                    <span className="tag tag-gold">?? Locked</span>
                   ) : (
-                    <span className="tag tag-green">✓ Available</span>
+                    <span className="tag tag-green">??</span>
                   )}
                   <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '8px' }}>
                     {track.modules.length} modules
@@ -139,13 +188,6 @@ const Learn = () => {
                 <h2>{activeTrack.modules[activeModule]?.title}</h2>
                 <div className="module-body">
                   {formatContent(activeTrack.modules[activeModule]?.content || '')}
-                </div>
-
-                <div className="module-ai-help">
-                  <h4>💡 AI Help</h4>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
-                    "Explain this in simple terms" or "Give a real-world example" — use the Recommendations page to chat about concepts.
-                  </p>
                 </div>
 
                 <div className="module-nav">

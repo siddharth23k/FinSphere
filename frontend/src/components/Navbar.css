@@ -6,10 +6,11 @@
   top: 0; left: 0;
   width: 240px;
   height: 100vh;
-  background: rgba(6,9,18,0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(180deg, rgba(6,9,18,0.98) 0%, rgba(10,15,28,0.95) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-right: 1px solid var(--border);
+  box-shadow: 4px 0 32px rgba(0,0,0,0.4);
   display: flex;
   flex-direction: column;
   z-index: 200;
@@ -131,8 +132,8 @@
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding: 10px 13px;
+  gap: 12px;
+  padding: 11px 14px;
   border-radius: var(--r-sm);
   text-decoration: none;
   color: var(--text-secondary);
@@ -142,6 +143,7 @@
   transition: all var(--dur) var(--ease);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 /* Hover shimmer */
@@ -156,9 +158,11 @@
 .nav-item:hover::after { opacity: 1; }
 
 .nav-item:hover {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.06);
   color: var(--text-primary);
-  transform: translateX(2px);
+  transform: translateX(3px);
+  border-color: rgba(212,175,55,0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
 }
 
 .nav-item.active {
