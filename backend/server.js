@@ -14,7 +14,8 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://finsphere-eight.vercel.app'
+    'https://finsphere-eight.vercel.app',
+    'https://finsphere-rqh2.onrender.com' // Add backend URL for self-reference
   ],
   credentials: true
 }));
@@ -43,7 +44,10 @@ const PORT = process.env.PORT || 5000;
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('MongoDB connected');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    console.log('✅ MongoDB connected to:', process.env.MONGO_URI?.split('@')[1]?.split('.')[0] || 'Unknown DB');
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
-  .catch((err) => console.error('MongoDB connection error:', err));
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err);
+    console.error('🔗 Connection string:', process.env.MONGO_URI ? 'Set' : 'Missing');
+  });
