@@ -83,7 +83,10 @@ const Recommendations = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedStock, setSelectedStock] = useState(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
-    const [activeCard, setActiveCard] = useState(null); // which rec card is expanded
+  const [simAmount, setSimAmount] = useState(10000);
+  const [simYears, setSimYears] = useState(5);
+  const [simReturn, setSimReturn] = useState(12);
+  const [activeCard, setActiveCard] = useState(null); // which rec card is expanded
 
   useEffect(() => {
     getPortfolio().then((r) => setPortfolio(r.data)).catch(() => {});
@@ -113,7 +116,9 @@ const Recommendations = () => {
     setQuoteLoading(false);
   };
 
-  
+  const simFV = simAmount * Math.pow(1 + simReturn / 100, simYears);
+  const simGain = simFV - simAmount;
+
   const totalInvested = portfolio?.holdings?.reduce((a, h) => a + h.quantity * h.averageBuyPrice, 0) || 0;
   const currentValue = portfolio?.holdings?.reduce((a, h) => a + h.quantity * (h.currentPrice || h.averageBuyPrice), 0) || 0;
   const pnl = currentValue - totalInvested;
@@ -293,6 +298,38 @@ const Recommendations = () => {
                   );
                 })}
               </div>
+            </div>
+
+            {/* What-If Simulation */}
+            <div className="card">
+              <h3 style={{ marginBottom: '16px' }}>What-If Simulation</h3>
+              <div className="sim-row">
+                <label>Investment ($)</label>
+                <input className="input" type="number" value={simAmount} onChange={(e) => setSimAmount(Number(e.target.value))} />
+              </div>
+              <div className="sim-row">
+                <label>Years: <strong>{simYears}</strong></label>
+                <input type="range" min="1" max="30" value={simYears} onChange={(e) => setSimYears(Number(e.target.value))} className="range-input" />
+              </div>
+              <div className="sim-row">
+                <label>Annual Return: <strong>{simReturn}%</strong></label>
+                <input type="range" min="1" max="30" value={simReturn} onChange={(e) => setSimReturn(Number(e.target.value))} className="range-input" />
+              </div>
+
+              <div className="sim-result">
+                <div>
+                  <span>Future Value</span>
+                  <strong>${simFV.toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong>
+                </div>
+                <div>
+                  <span>Total Gain</span>
+                  <strong className="positive">+${simGain.toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong>
+                </div>
+              </div>
+
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '12px' }}>
+                Educational / Paper Recommendations only. Not real financial advice.
+              </p>
             </div>
           </div>
         </div>
