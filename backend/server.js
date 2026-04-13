@@ -10,14 +10,18 @@ const tradeRoutes = require('./routes/trades');
 
 const app = express();
 
-// CORS
+// CORS - Allow all origins for development
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://finsphere-eight.vercel.app',
-    'https://finsphere-rqh2.onrender.com' // Add backend URL for self-reference
+    'https://finsphere-rqh2.onrender.com',
+    'https://vercel.app', // Allow Vercel subdomains
+    'https://*.vercel.app' // Allow all Vercel subdomains
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
