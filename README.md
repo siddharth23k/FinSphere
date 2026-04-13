@@ -8,7 +8,7 @@ FinSphere lets users simulate stock market investing with ₹1,00,000 in virtual
 
 ## Live Preview
 
-> Run locally — see setup instructions below.
+🌐 [finsphere-eight.vercel.app](https://finsphere-eight.vercel.app)
 
 ---
 
