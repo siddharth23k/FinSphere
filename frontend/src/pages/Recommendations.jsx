@@ -4,143 +4,6 @@ import { getPortfolio, getStockQuote, searchStocks } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import './Recommendations.css';
 
-// Simulation Graph Component
-const SimulationGraph = ({ amount, years, returnRate }) => {
-  // Generate projection data
-  const generateProjection = () => {
-    const data = [];
-    let currentValue = amount;
-    
-    for (let year = 0; year <= years; year++) {
-      data.push({
-        year,
-        value: Math.round(currentValue),
-        principal: Math.round(amount)
-      });
-      currentValue *= (1 + returnRate / 100);
-    }
-    
-    return data;
-  };
-
-  const projectionData = generateProjection();
-  
-  // SVG dimensions
-  const width = 100;
-  const height = 200;
-  const padding = 15;
-  const chartWidth = width - 2 * padding;
-  const chartHeight = height - 2 * padding;
-  
-  const maxValue = Math.max(...projectionData.map(d => d.value));
-  const minValue = amount;
-  const valueRange = maxValue - minValue;
-  
-  // Scale functions
-  const xScale = (year) => padding + (year / years) * chartWidth;
-  const yScale = (value) => height - padding - ((value - minValue) / valueRange) * chartHeight;
-  
-  // Create paths
-  const principalPath = projectionData.map((d, i) => {
-    const x = xScale(d.year);
-    const y = yScale(d.principal);
-    return i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
-  }).join(' ');
-  
-  const valuePath = projectionData.map((d, i) => {
-    const x = xScale(d.year);
-    const y = yScale(d.value);
-    return i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
-  }).join(' ');
-  
-  return (
-    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="sim-chart">
-      {/* Grid lines */}
-      {[0, 25, 50, 75, 100].map(i => {
-        const y = padding + (i * chartHeight / 100);
-        return (
-          <g key={i}>
-            <line 
-              x1={padding} 
-              y1={y} 
-              x2={width - padding} 
-              y2={y} 
-              stroke="rgba(255,255,255,0.1)" 
-              strokeWidth="0.5" 
-            />
-            <text 
-              x={padding - 5} 
-              y={y + 4} 
-              fill="var(--text-muted)" 
-              fontSize="8" 
-              textAnchor="end"
-            >
-              {Math.round(minValue + (valueRange * (1 - i/4))).toLocaleString()}
-            </text>
-          </g>
-        );
-      })}
-      
-      {/* Principal line */}
-      <path 
-        d={principalPath} 
-        fill="none" 
-        stroke="var(--text-muted)" 
-        strokeWidth="2" 
-        strokeDasharray="4,4" 
-      />
-      
-      {/* Value line */}
-      <path 
-        d={valuePath} 
-        fill="none" 
-        stroke="var(--gold)" 
-        strokeWidth="3" 
-      />
-      
-      {/* Area fill */}
-      <path 
-        d={`${valuePath} L ${xScale(years)} ${yScale(amount)} L ${padding} ${yScale(amount)} Z`}
-        fill="url(#goldGradient)" 
-        opacity="0.3" 
-      />
-      
-      {/* Gradient definition */}
-      <defs>
-        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.4" />
-          <stop offset="100%" stopColor="var(--gold)" stopOpacity="0.05" />
-        </linearGradient>
-      </defs>
-      
-      {/* Data points */}
-      {projectionData.map((d, i) => (
-        <circle 
-          key={d.year} 
-          cx={xScale(d.year)} 
-          cy={yScale(d.value)} 
-          r="3" 
-          fill="var(--gold)" 
-          className="chart-point"
-        />
-      ))}
-      
-      {/* X-axis labels */}
-      {projectionData.filter((_, i) => i % Math.ceil(Math.max(1, years / 5)) === 0).map(d => (
-        <text 
-          key={d.year} 
-          x={xScale(d.year)} 
-          y={height - 8} 
-          fill="var(--text-muted)" 
-          fontSize="8" 
-          textAnchor="middle"
-        >
-          Y{d.year}
-        </text>
-      ))}
-    </svg>
-  );
-};
 
 const RECOMMENDATION_CARDS = [
   {
@@ -220,10 +83,7 @@ const Recommendations = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedStock, setSelectedStock] = useState(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
-  const [simAmount, setSimAmount] = useState(10000);
-  const [simYears, setSimYears] = useState(5);
-  const [simReturn, setSimReturn] = useState(12);
-  const [activeCard, setActiveCard] = useState(null); // which rec card is expanded
+    const [activeCard, setActiveCard] = useState(null); // which rec card is expanded
 
   useEffect(() => {
     getPortfolio().then((r) => setPortfolio(r.data)).catch(() => {});
@@ -253,9 +113,7 @@ const Recommendations = () => {
     setQuoteLoading(false);
   };
 
-  const simFV = simAmount * Math.pow(1 + simReturn / 100, simYears);
-  const simGain = simFV - simAmount;
-
+  
   const totalInvested = portfolio?.holdings?.reduce((a, h) => a + h.quantity * h.averageBuyPrice, 0) || 0;
   const currentValue = portfolio?.holdings?.reduce((a, h) => a + h.quantity * (h.currentPrice || h.averageBuyPrice), 0) || 0;
   const pnl = currentValue - totalInvested;
@@ -435,44 +293,6 @@ const Recommendations = () => {
                   );
                 })}
               </div>
-            </div>
-
-            {/* What-If Simulation */}
-            <div className="card">
-              <h3 style={{ marginBottom: '16px' }}>📐 What-If Simulation</h3>
-              <div className="sim-row">
-                <label>Investment ($)</label>
-                <input className="input" type="number" value={simAmount} onChange={(e) => setSimAmount(Number(e.target.value))} />
-              </div>
-              <div className="sim-row">
-                <label>Years: <strong>{simYears}</strong></label>
-                <input type="range" min="1" max="30" value={simYears} onChange={(e) => setSimYears(Number(e.target.value))} className="range-input" />
-              </div>
-              <div className="sim-row">
-                <label>Annual Return: <strong>{simReturn}%</strong></label>
-                <input type="range" min="1" max="30" value={simReturn} onChange={(e) => setSimReturn(Number(e.target.value))} className="range-input" />
-              </div>
-
-              <div className="sim-result">
-                <div>
-                  <span>Future Value</span>
-                  <strong>${simFV.toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong>
-                </div>
-                <div>
-                  <span>Total Gain</span>
-                  <strong className="positive">+${simGain.toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong>
-                </div>
-              </div>
-
-              {/* Simulation Graph */}
-              <div className="sim-chart-container">
-                <h4 style={{ marginBottom: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>Growth Projection</h4>
-                <SimulationGraph amount={simAmount} years={simYears} returnRate={simReturn} />
-              </div>
-
-              <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '12px' }}>
-                Educational / Paper Recommendations only. Not real financial advice.
-              </p>
             </div>
           </div>
         </div>
