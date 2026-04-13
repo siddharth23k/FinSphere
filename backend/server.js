@@ -10,15 +10,18 @@ const tradeRoutes = require('./routes/trades');
 
 const app = express();
 
-// CORS - Temporary fix to allow all origins
-app.use(cors({
-  origin: '*', // Temporary fix for deployment
+const corsOptions = {
+  origin: [
+    'https://finsphere-eight.vercel.app',
+    'http://localhost:3000'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Authorization']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
 
+app.options('*', cors(corsOptions));  // preflight
+app.use(cors(corsOptions));           // all other requests
 app.use(express.json());
 
 // Routes

@@ -1,18 +1,4 @@
-import axios from 'axios';
-
-const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://finsphere-rqh2.onrender.com/api'
-});
-
-// Debug: Log which URL is being used
-console.log('🔗 API Base URL:', API.defaults.baseURL);
-
-// Attach token from localStorage automatically
-API.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem('finsphere_user') || '{}');
-  if (user.token) config.headers.Authorization = `Bearer ${user.token}`;
-  return config;
-});
+import { API } from './apiInstance';
 
 // Auth
 export const registerUser = (data) => API.post('/auth/register', data);
@@ -30,7 +16,7 @@ export const getStockQuote = (symbol) => API.get(`/stocks/quote/${symbol}`);
 export const searchStocks = (query) => API.get(`/stocks/search/${query}`);
 export const getStockHistory = (symbol) => API.get(`/stocks/history/${symbol}`);
 export const getNews = () => API.get('/stocks/news');
-export const getIndexData = (symbol = '^GSPC') => API.get(`/stocks/history/${symbol}`); // S&P 500
+export const getIndexData = (symbol = '^GSPC') => API.get(`/stocks/history/${symbol}`);
 
 // Trades
 export const getTrades = () => API.get('/trades');
