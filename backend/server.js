@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -9,16 +10,14 @@ const tradeRoutes = require('./routes/trades');
 
 const app = express();
 
-// Manual CORS headers
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  next();
-});
+// CORS
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://your-vercel-app.vercel.app'
+  ],
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -29,6 +28,15 @@ app.use('/api/stocks', stockRoutes);
 app.use('/api/trades', tradeRoutes);
 
 app.get('/', (req, res) => res.json({ message: 'FinSphere API running' }));
+
+// Test route
+app.get('/api/test-env', (req, res) => {
+  res.json({
+    mongo: process.env.MONGO_URI ? '✅ Set' : '❌ Missing',
+    jwt: process.env.JWT_SECRET ? '✅ Set' : '❌ Missing',
+    finnhub: process.env.FINNHUB_API_KEY ? '✅ Set' : '❌ Missing'
+  });
+});
 
 const PORT = process.env.PORT || 5000;
 
