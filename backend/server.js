@@ -14,7 +14,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    // 'https://your-vercel-app.vercel.app'
+    'https://finsphere-eight.vercel.app'
   ],
   credentials: true
 }));
