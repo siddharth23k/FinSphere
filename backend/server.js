@@ -35,9 +35,9 @@ app.get('/', (req, res) => res.json({ message: 'FinSphere API running' }));
 // Test route
 app.get('/api/test-env', (req, res) => {
   res.json({
-    mongo: process.env.MONGO_URI ? '✅ Set' : '❌ Missing',
-    jwt: process.env.JWT_SECRET ? '✅ Set' : '❌ Missing',
-    finnhub: process.env.FINNHUB_API_KEY ? '✅ Set' : '❌ Missing'
+    mongo: process.env.MONGO_URI ? 'Set' : 'Missing',
+    jwt: process.env.JWT_SECRET ? 'Set' : 'Missing',
+    finnhub: process.env.FINNHUB_API_KEY ? 'Set' : 'Missing'
   });
 });
 
