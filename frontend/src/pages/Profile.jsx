@@ -18,7 +18,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
+virtual
   const handleSave = async () => {
     setLoading(true);
     try {
@@ -53,7 +53,7 @@ const Profile = () => {
             </div>
             <div className="profile-balance-display">
               <span>Virtual Balance</span>
-              <strong>₹{Number(user?.virtualBalance || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong>
+              <strong>₹{Number(user?.virtualBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong>
             </div>
           </div>
 
