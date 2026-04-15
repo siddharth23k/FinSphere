@@ -1,16 +1,9 @@
-/* ══════════════════════════════════════════════════════════════
-   HOME — Revolut-calibre landing page
-══════════════════════════════════════════════════════════════ */
-
 .home {
   min-height: 100vh;
   background: var(--bg-base);
   overflow: hidden;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   HEADER — transparent floating navbar
-══════════════════════════════════════════════════════════════ */
 .home-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -47,9 +40,6 @@
   border-radius: 8px;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   HERO — full viewport, Revolut scale
-══════════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -231,9 +221,6 @@
   font-weight: 600;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   FEATURES — large cards, generous spacing
-══════════════════════════════════════════════════════════════ */
 .features-section {
   padding: 120px 80px;
   max-width: 1200px;
@@ -332,9 +319,6 @@
   font-weight: 300;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   TESTIMONIALS
-══════════════════════════════════════════════════════════════ */
 .testimonials-section {
   padding: 100px 80px;
   background: linear-gradient(180deg, transparent 0%, var(--bg-secondary) 20%, var(--bg-secondary) 80%, transparent 100%);
@@ -419,9 +403,6 @@
   letter-spacing: 0.06em;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   FINAL CTA
-══════════════════════════════════════════════════════════════ */
 .final-cta {
   padding: 120px 40px;
   text-align: center;
@@ -466,9 +447,6 @@
   position: relative;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════════════════════════ */
 .home-footer {
   display: flex;
   align-items: center;
@@ -492,9 +470,6 @@
 .footer-links button:hover { color: var(--gold); }
 
 
-/* ══════════════════════════════════════════════════════════════
-   MORPH SECTION — Revolut-style scroll reveal
-══════════════════════════════════════════════════════════════ */
 .morph-section {
   position: relative;
   padding: 120px 80px 140px;
@@ -744,9 +719,6 @@
   margin: 0;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .home-header { padding: 0 24px; }
   .hero { padding: 100px 24px 60px; }
